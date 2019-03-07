@@ -32,9 +32,25 @@ public class DemoApplicationTests
     public void testHello() throws Exception
     {
         mock.perform(post("/hello")//.accept(MediaType.APPLICATION_JSON)
-                 )
+        )
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("Hello SpringBoot!")));
+    }
+
+    @Test
+    public void testUserApi()
+    {
+
+        //Get User List
+
+        //Get user
+
+        //POST add user
+
+        //PUT update user
+
+        //DELETE delete user
+
     }
 
 }
