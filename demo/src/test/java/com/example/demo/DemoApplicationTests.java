@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,7 +31,8 @@ public class DemoApplicationTests
     @Test
     public void testHello() throws Exception
     {
-        mock.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
+        mock.perform(post("/hello")//.accept(MediaType.APPLICATION_JSON)
+                 )
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("Hello SpringBoot!")));
     }
