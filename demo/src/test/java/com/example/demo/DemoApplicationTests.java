@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,19 +38,44 @@ public class DemoApplicationTests
     }
 
     @Test
-    public void testUserApi()
+    public void testUserApi() throws Exception
     {
-
         //Get User List
-
-        //Get user
+        mock.perform(get("/users/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[]")));
 
         //POST add user
+        mock.perform(post("/users/")
+                .param("id", "1")
+                .param("name", "User")
+                .param("age", "1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("success")));
+        mock.perform(get("/users/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[{\"id\":1,\"name\":\"User\",\"age\":1}]")));
+
+        //Get user
+        mock.perform(get("/users/1")).andExpect(status().isOk())
+                .andExpect(content().string(equalTo("{\"id\":1,\"name\":\"User\",\"age\":1}")));
+
 
         //PUT update user
-
+        mock.perform(put("/users/1")
+                .param("name", "user-new")
+                .param("age", "2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("success")));
+        mock.perform(get("/users/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[{\"id\":1,\"name\":\"user-new\",\"age\":2}]")));
         //DELETE delete user
-
+        mock.perform(delete("/users/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("success")));
+        mock.perform(get("/users/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("[]")));
     }
-
 }

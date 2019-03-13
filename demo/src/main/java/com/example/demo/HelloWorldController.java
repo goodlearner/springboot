@@ -21,7 +21,7 @@ public class HelloWorldController
 
     // http://localhost:8080/users/?page=1&size=10
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<User> getUserList(@RequestParam(required = false) int page, @RequestParam(required = false) int size)
+    public List<User> getUserList(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size)
     {
         return new ArrayList<>(userMap.values());
     }
